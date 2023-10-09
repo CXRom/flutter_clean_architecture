@@ -20,9 +20,6 @@ class ShowDetailsPage extends ConsumerWidget {
             return Text(value.name);
           },
           error: (error, stackTrace) {
-            print(error);
-            print(stackTrace);
-
             return const Center(
               child: Text('Error'),
             );

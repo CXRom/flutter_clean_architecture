@@ -21,7 +21,8 @@ class ShowsRepository extends IShowsRepository {
     final result = await showsApiService.getShows(query: query);
 
     final shows = result.map((e) => ShowData.fromEntity(e.show)).toList();
-    //inser in local db
+
+    //cache locally
     await showsLocalSource.insertShows(shows);
 
     return result.map((e) => e.show).toList();
@@ -29,8 +30,14 @@ class ShowsRepository extends IShowsRepository {
 
   @override
   Future<ShowEntity> getShowsById(int id) async {
-    final result = await showsApiService.getShowById(id: id);
-    return result;
+    final result = await showsLocalSource.getShowById(id);
+
+    if (result == null) {
+      final request = await showsApiService.getShowById(id: id);
+      return request;
+    }
+
+    return result.toEntity();
   }
 }
 

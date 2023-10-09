@@ -32,4 +32,15 @@ class ShowData {
       status: entity.status,
     );
   }
+
+  ShowEntity toEntity() {
+    return ShowEntity(
+      id: id,
+      url: url,
+      name: name,
+      type: type,
+      language: language,
+      status: status,
+    );
+  }
 }
