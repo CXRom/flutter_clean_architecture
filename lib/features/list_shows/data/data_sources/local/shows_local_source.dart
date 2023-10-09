@@ -6,9 +6,10 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'shows_local_source.g.dart';
 
 abstract class IShowsLocalSource {
-  Future<ShowData?> getShowById(int id);
-  Future<void> insertShows(List<ShowData> shows);
-  Future<List<ShowData>> getShows();
+  Future<ShowData?> insert(ShowData item);
+  Future<ShowData?> getById(int id);
+  Future<void> insertList(List<ShowData> shows);
+  Future<List<ShowData>> getAll();
 }
 
 class ShowsLocalSource implements IShowsLocalSource {
@@ -17,19 +18,27 @@ class ShowsLocalSource implements IShowsLocalSource {
   ShowsLocalSource({required this.db});
 
   @override
-  Future<void> insertShows(List<ShowData> shows) async {
+  Future<ShowData?> insert(ShowData item) async {
+    await db.writeTxn(() async {
+      await db.showDatas.put(item);
+    });
+    return item;
+  }
+
+  @override
+  Future<void> insertList(List<ShowData> shows) async {
     await db.writeTxn(() async {
       await db.showDatas.putAll(shows);
     });
   }
 
   @override
-  Future<List<ShowData>> getShows() async {
+  Future<List<ShowData>> getAll() async {
     return await db.showDatas.where().findAll();
   }
 
   @override
-  Future<ShowData?> getShowById(int id) {
+  Future<ShowData?> getById(int id) {
     return db.showDatas.where().idEqualTo(id).findFirst();
   }
 }

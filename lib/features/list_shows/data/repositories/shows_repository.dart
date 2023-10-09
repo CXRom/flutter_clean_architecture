@@ -1,5 +1,5 @@
 import 'package:flutter_clean_architecture/features/list_shows/data/data_sources/local/shows_local_source.dart';
-import 'package:flutter_clean_architecture/features/list_shows/data/data_sources/remote/shows_data_source.dart';
+import 'package:flutter_clean_architecture/features/list_shows/data/data_sources/remote/shows_remote_source.dart';
 import 'package:flutter_clean_architecture/features/list_shows/data/db/show_data.dart';
 import 'package:flutter_clean_architecture/features/list_shows/domain/entities/show_entity.dart';
 import 'package:flutter_clean_architecture/features/list_shows/domain/repositories/i_shows_repository.dart';
@@ -8,7 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'shows_repository.g.dart';
 
 class ShowsRepository extends IShowsRepository {
-  final ShowsDataSource showsApiService;
+  final ShowsRemoteSource showsApiService;
   final IShowsLocalSource showsLocalSource;
 
   ShowsRepository({
@@ -18,22 +18,23 @@ class ShowsRepository extends IShowsRepository {
 
   @override
   Future<List<ShowEntity>> getShows(String query) async {
-    final result = await showsApiService.getShows(query: query);
+    final remoteData = await showsApiService.getShows(query: query);
 
-    final shows = result.map((e) => ShowData.fromEntity(e.show)).toList();
+    final data = remoteData.map((e) => ShowData.fromEntity(e.show)).toList();
 
-    //cache locally
-    await showsLocalSource.insertShows(shows);
+    await showsLocalSource.insertList(data);
 
-    return result.map((e) => e.show).toList();
+    return remoteData.map((e) => e.show).toList();
   }
 
   @override
   Future<ShowEntity> getShowsById(int id) async {
-    final result = await showsLocalSource.getShowById(id);
+    final result = await showsLocalSource.getById(id);
 
     if (result == null) {
       final request = await showsApiService.getShowById(id: id);
+
+      showsLocalSource.insert(ShowData.fromEntity(request));
       return request;
     }
 
@@ -43,7 +44,7 @@ class ShowsRepository extends IShowsRepository {
 
 @riverpod
 IShowsRepository showsRepository(ShowsRepositoryRef ref) {
-  final showsApiDataSource = ref.watch(showsDataSourceProvider);
+  final showsApiDataSource = ref.watch(showsRemoteSourceProvider);
   final showsLocalSource = ref.watch(showsLocalSourceProvider);
   return ShowsRepository(
     showsApiService: showsApiDataSource,
