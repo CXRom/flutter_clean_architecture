@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'shows_api_data_source.dart';
+part of 'shows_data_source.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'shows_api_data_source.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _ShowsApiDataSource implements ShowsApiDataSource {
-  _ShowsApiDataSource(
+class _ShowsDataSource implements ShowsDataSource {
+  _ShowsDataSource(
     this._dio, {
     this.baseUrl,
   });
@@ -109,22 +109,20 @@ class _ShowsApiDataSource implements ShowsApiDataSource {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$showsApiDataSourceHash() =>
-    r'1fd8bbddfd468e0a37fe32eceff473f0dccc4dca';
+String _$showsDataSourceHash() => r'945da9bbc07133e62615ea32eac4617b0ae698cd';
 
-/// See also [showsApiDataSource].
-@ProviderFor(showsApiDataSource)
-final showsApiDataSourceProvider =
-    AutoDisposeProvider<ShowsApiDataSource>.internal(
-  showsApiDataSource,
-  name: r'showsApiDataSourceProvider',
+/// See also [showsDataSource].
+@ProviderFor(showsDataSource)
+final showsDataSourceProvider = AutoDisposeProvider<ShowsDataSource>.internal(
+  showsDataSource,
+  name: r'showsDataSourceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$showsApiDataSourceHash,
+      : _$showsDataSourceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef ShowsApiDataSourceRef = AutoDisposeProviderRef<ShowsApiDataSource>;
+typedef ShowsDataSourceRef = AutoDisposeProviderRef<ShowsDataSource>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

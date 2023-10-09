@@ -6,11 +6,11 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter_clean_architecture/features/list_shows/data/model/show_model.dart';
 import 'package:retrofit/http.dart';
 
-part 'shows_api_data_source.g.dart';
+part 'shows_data_source.g.dart';
 
 @RestApi()
-abstract class ShowsApiDataSource {
-  factory ShowsApiDataSource(Dio dio, {String baseUrl}) = _ShowsApiDataSource;
+abstract class ShowsDataSource {
+  factory ShowsDataSource(Dio dio, {String baseUrl}) = _ShowsDataSource;
 
   @GET('/search/shows')
   Future<List<ShowSearchModel>> getShows({
@@ -24,7 +24,7 @@ abstract class ShowsApiDataSource {
 }
 
 @riverpod
-ShowsApiDataSource showsApiDataSource(ShowsApiDataSourceRef ref) {
+ShowsDataSource showsDataSource(ShowsDataSourceRef ref) {
   final dio = ref.watch(dioProvider);
-  return ShowsApiDataSource(dio, baseUrl: showsAPIBaseUrl);
+  return ShowsDataSource(dio, baseUrl: showsAPIBaseUrl);
 }

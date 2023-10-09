@@ -24,6 +24,9 @@ dependencies:
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
   hooks_riverpod: ^2.4.3
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
+  path_provider: ^2.1.1
 
 dev_dependencies:
   flutter_test:
@@ -38,6 +41,7 @@ dev_dependencies:
   floor_generator: ^1.4.2
   freezed: ^2.4.1
   json_serializable: ^6.7.1
+  isar_generator: ^3.1.0+1
 
 flutter:
 

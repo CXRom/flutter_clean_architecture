@@ -3,4 +3,7 @@
     "**/*.g.dart": true,
     "**/*.freezed.dart": true
   },
+  "explorer.fileNesting.patterns": {
+    "*.dart": "${capture}.g.dart, ${capture}.freezed.dart",
+  },
 }
