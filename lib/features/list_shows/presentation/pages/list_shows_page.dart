@@ -3,12 +3,30 @@ import 'package:flutter_clean_architecture/features/list_shows/presentation/page
 import 'package:flutter_clean_architecture/features/list_shows/presentation/providers/usecases.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'dart:async';
+
+class Throttler {
+  final Duration delay;
+  Timer? _timer;
+
+  Throttler({required this.delay});
+
+  void run(Function action) {
+    _timer?.cancel();
+    _timer = Timer(delay, () {
+      _timer = null;
+      action();
+    });
+  }
+}
 
 class ListShowsPage extends HookConsumerWidget {
   const ListShowsPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final throttler = Throttler(delay: const Duration(milliseconds: 200));
+
     final searchState = useState("");
     final listShowsProvider =
         ref.watch(getShowsUseCaseProvider(searchState.value));
@@ -17,7 +35,9 @@ class ListShowsPage extends HookConsumerWidget {
       appBar: AppBar(
         title: TextField(
           onChanged: (value) {
-            searchState.value = value;
+            throttler.run(() {
+              searchState.value = value;
+            });
           },
           decoration: const InputDecoration(
             hintText: 'Search...',
