@@ -1,6 +1,5 @@
 import 'package:flutter_clean_architecture/features/list_shows/data/db/isar.dart';
 import 'package:flutter_clean_architecture/features/list_shows/data/db/show_data.dart';
-import 'package:flutter_clean_architecture/features/list_shows/domain/repositories/i_shows_repository.dart';
 import 'package:isar/isar.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
