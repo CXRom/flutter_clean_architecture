@@ -1,7 +1,7 @@
 {
   "files.exclude": {
-    "**/*.g.dart": true,
-    "**/*.freezed.dart": true
+    "**/*.g.dart": false,
+    "**/*.freezed.dart": false
   },
   "explorer.fileNesting.patterns": {
     "*.dart": "${capture}.g.dart, ${capture}.freezed.dart"

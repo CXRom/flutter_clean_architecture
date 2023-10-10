@@ -17,7 +17,7 @@ class ShowDetailsPage extends ConsumerWidget {
       ),
       body: show.when(
           data: (value) {
-            return Text(value.name);
+            return Text(value!.name);
           },
           error: (error, stackTrace) {
             return const Center(

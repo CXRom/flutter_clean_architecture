@@ -15,9 +15,8 @@ Future<List<ShowEntity>> getShowsUseCase(GetShowsUseCaseRef ref, String query) {
 }
 
 @riverpod
-Future<ShowEntity> getShowByIdUseCase(GetShowByIdUseCaseRef ref, int id) {
+Future<ShowEntity?> getShowByIdUseCase(GetShowByIdUseCaseRef ref, int id) {
   final useCase =
       GetShowUseCase(repository: ref.watch(showsRepositoryProvider));
-
   return useCase(id);
 }

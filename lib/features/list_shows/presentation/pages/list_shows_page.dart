@@ -66,8 +66,8 @@ class ListShowsPage extends HookConsumerWidget {
             );
           },
           error: (error, stackTrace) {
-            return const Center(
-              child: Text('Error'),
+            return Center(
+              child: Text(error.toString()),
             );
           },
           loading: () => const Center(

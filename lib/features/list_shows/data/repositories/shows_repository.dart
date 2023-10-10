@@ -17,28 +17,29 @@ class ShowsRepository extends IShowsRepository {
   });
 
   @override
-  Future<List<ShowEntity>> getShows(String query) async {
+  Future<List<ShowEntity>> getRemoteShows(String query) async {
     final remoteData = await showsApiService.getShows(query: query);
-
-    final data = remoteData.map((e) => ShowData.fromEntity(e.show)).toList();
-
-    await showsLocalSource.insertList(data);
-
     return remoteData.map((e) => e.show).toList();
+    // return data = remoteData.map((e) => ShowData.fromEntity(e.show)).toList();
+    // await showsLocalSource.insertList(data);
   }
 
   @override
-  Future<ShowEntity> getShowsById(int id) async {
+  Future<ShowEntity> getRemoteShowsById(int id) async {
+    final result = await showsApiService.getShowById(id: id);
+    return result;
+  }
+
+  @override
+  Future<List<ShowEntity>> getLocalShows(String query) async {
+    final items = await showsLocalSource.getAll();
+    return items.map((e) => e.toEntity()).toList();
+  }
+
+  @override
+  Future<ShowEntity?> getLocalShowsById(int id) async {
     final result = await showsLocalSource.getById(id);
-
-    if (result == null) {
-      final request = await showsApiService.getShowById(id: id);
-
-      showsLocalSource.insert(ShowData.fromEntity(request));
-      return request;
-    }
-
-    return result.toEntity();
+    return result?.toEntity();
   }
 }
 

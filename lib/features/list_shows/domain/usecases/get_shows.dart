@@ -8,5 +8,5 @@ class GetShowsUseCase extends UseCase {
   GetShowsUseCase({required this.repository});
 
   Future<List<ShowEntity>> call(String query) =>
-      safe(() => repository.getShows(query));
+      safe(() => repository.getRemoteShows(query));
 }
